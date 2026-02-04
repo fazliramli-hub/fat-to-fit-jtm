@@ -49,6 +49,7 @@
             <div>
                 <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Nama Penuh</label>
                 <input type="text" id="loginName" required placeholder="Cth: Ahmad bin Abu" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 outline-none transition-all">
+                <p class="text-[10px] text-gray-400 mt-1">* Log masuk sebagai 'Admin' untuk akses data keseluruhan.</p>
             </div>
             <div>
                 <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Bahagian</label>
@@ -70,7 +71,7 @@
     </div>
 
     <!-- 2. PAGE: TIMBANGAN & HANTAR -->
-    <div id="mainPage" class="hidden w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+    <div id="mainPage" class="hidden w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in my-8">
         <!-- Header -->
         <div class="jtm-blue p-6 text-white flex justify-between items-center">
             <div>
@@ -113,10 +114,49 @@
                 </button>
             </form>
 
-            <div class="mt-6 pt-6 border-t border-gray-100 text-center">
-                <a href="https://docs.google.com/spreadsheets/d/1fVpq-brUT7oYhJApRttj760fNJXOo1W3xw9RMKKPwQA/edit?usp=sharing" target="_blank" class="text-blue-600 text-sm hover:underline">
-                    <i class="fa-solid fa-table mr-1"></i> Lihat Data Keseluruhan (Google Sheet)
-                </a>
+            <!-- Bahagian Panduan Pemakanan Seimbang (Baru Ditambah) -->
+            <div class="mt-8 pt-8 border-t border-gray-100">
+                <h3 class="text-md font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fa-solid fa-utensils mr-2 text-orange-500"></i> Panduan Pemakanan Seimbang
+                </h3>
+                <div class="space-y-4">
+                    <div class="bg-orange-50 p-4 rounded-xl border border-orange-100">
+                        <p class="text-xs font-bold text-orange-700 uppercase mb-2">Konsep Suku-Suku Separuh</p>
+                        <ul class="text-sm text-gray-700 space-y-2">
+                            <li class="flex items-start">
+                                <span class="text-orange-500 mr-2">●</span>
+                                <span><strong>Suku Pinggan:</strong> Karbohidrat (Nasi, Roti, Bijirin)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-orange-500 mr-2">●</span>
+                                <span><strong>Suku Pinggan:</strong> Protein (Ikan, Ayam, Daging, Kekacang)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-orange-500 mr-2">●</span>
+                                <span><strong>Separuh Pinggan:</strong> Sayur-sayuran dan Buah-buahan</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3 text-[11px]">
+                        <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 flex items-center">
+                            <i class="fa-solid fa-droplet text-blue-500 mr-2"></i> Minum 8 gelas air sehari
+                        </div>
+                        <div class="bg-red-50 p-3 rounded-lg border border-red-100 flex items-center">
+                            <i class="fa-solid fa-ban text-red-500 mr-2"></i> Kurangkan gula & garam
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Section Only -->
+            <div id="adminSection" class="hidden mt-6 pt-6 border-t border-gray-100 text-center">
+                <div class="bg-gray-50 p-4 rounded-lg border border-dashed border-gray-300">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Panel Admin Sahaja</p>
+                    <a href="https://docs.google.com/spreadsheets/d/1fVpq-brUT7oYhJApRttj760fNJXOo1W3xw9RMKKPwQA/edit?usp=sharing" target="_blank" class="text-blue-600 text-sm font-bold hover:underline">
+                        <i class="fa-solid fa-table mr-1"></i> Lihat Data Keseluruhan (Google Sheet)
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -127,7 +167,7 @@
     </div>
 
     <script>
-        // Google Apps Script URL (Sila pastikan Web App anda telah di-deploy)
+        // Google Apps Script URL
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhFdtj2c_L91xfQ6JYvK3noY24Fty91JL3HgJyIKbUHVyLMff7H8EQqke7PpBDZpZ1VA/exec";
 
         let currentUser = null;
@@ -157,6 +197,14 @@
             document.getElementById('loginPage').classList.add('hidden');
             document.getElementById('mainPage').classList.remove('hidden');
             document.getElementById('userInfo').textContent = `${currentUser.name} | ${currentUser.dept}`;
+
+            // Admin Access Check
+            const adminSection = document.getElementById('adminSection');
+            if (currentUser.name.toLowerCase() === 'admin') {
+                adminSection.classList.remove('hidden');
+            } else {
+                adminSection.classList.add('hidden');
+            }
         }
 
         function logout() {
