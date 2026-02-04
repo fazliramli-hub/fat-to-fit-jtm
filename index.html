@@ -3,722 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fat to Fit JTM - Portal Kesihatan & Kecerdasan JTM</title>
+    <title>Fat to Fit JTM - Basic</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- FontAwesome for Icons (No SVG) -->
+    <!-- FontAwesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Chart.js for Data Visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Google Fonts -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
+            background-color: #f3f4f6;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-
-        /* Chart Container Styling */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px; 
-            max-height: 400px;
-        }
-        
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px; 
-            }
-        }
-
-        .gradient-header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        .jtm-blue {
+            background-color: #1e3a8a;
         }
 
         .animate-fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeIn 0.3s ease-out forwards;
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .ai-glow {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
     </style>
 </head>
-<body class="text-gray-800 min-h-screen flex flex-col">
+<body class="text-gray-800 min-h-screen flex items-center justify-center p-4">
 
-    <!-- LOGIN MODAL -->
-    <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 animate-fade-in border-t-4 border-blue-600">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4 text-blue-800">
-                    <i class="fa-solid fa-user-shield text-3xl"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Log Masuk Pegawai</h2>
-                <p class="text-sm text-gray-500 mt-2">Masukkan butiran untuk akses rekod anda "jujur jangan tak jujur".</p>
+    <!-- 1. PAGE: LOG IN -->
+    <div id="loginPage" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4 text-blue-800">
+                <i class="fa-solid fa-user-circle text-4xl"></i>
             </div>
-            
-            <form id="loginForm" class="space-y-5">
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Nama Penuh</label>
-                    <input type="text" id="loginName" required placeholder="Cth: Ahmad Albab" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Bahagian</label>
-                    <div class="relative">
-                        <select id="loginDept" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-white transition-all">
-                            <option value="">Pilih Bahagian...</option>
-                            <option value="PENGURUSAN TERTINGGI">PENGURUSAN TERTINGGI</option>
-                            <option value="BAHAGIAN KHIDMAT PENGURUSAN">BAHAGIAN KHIDMAT PENGURUSAN</option>
-                            <option value="BAHAGIAN PEMBANGUNAN KEMAHIRAN">BAHAGIAN PEMBANGUNAN KEMAHIRAN</option>
-                            <option value="BAHAGIAN KAWALAN TEKNIKAL">BAHAGIAN KAWALAN TEKNIKAL</option>
-                            <option value="BAHAGIAN PENGURUSAN LATIHAN">BAHAGIAN PENGURUSAN LATIHAN</option>
-                            <option value="BAHAGIAN PERANCANGAN & PENYELIDIKAN">BAHAGIAN PERANCANGAN & PENYELIDIKAN</option>
-                            <option value="UNIT JALINAN INDUSTRI">UNIT JALINAN INDUSTRI</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                            <i class="fa-solid fa-chevron-down text-xs"></i>
-                        </div>
+            <h2 class="text-2xl font-bold text-gray-800">Log Masuk Pegawai</h2>
+            <p class="text-sm text-gray-500 mt-2">Sila kenal pasti diri anda untuk memulakan timbangan.</p>
+        </div>
+        
+        <form id="loginForm" class="space-y-5">
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Nama Penuh</label>
+                <input type="text" id="loginName" required placeholder="Cth: Ahmad bin Abu" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 outline-none transition-all">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Bahagian</label>
+                <select id="loginDept" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 outline-none bg-white transition-all">
+                    <option value="">Pilih Bahagian...</option>
+                    <option value="PENGURUSAN TERTINGGI">PENGURUSAN TERTINGGI</option>
+                    <option value="BAHAGIAN KHIDMAT PENGURUSAN">BAHAGIAN KHIDMAT PENGURUSAN</option>
+                    <option value="BAHAGIAN PEMBANGUNAN KEMAHIRAN">BAHAGIAN PEMBANGUNAN KEMAHIRAN</option>
+                    <option value="BAHAGIAN KAWALAN TEKNIKAL">BAHAGIAN KAWALAN TEKNIKAL</option>
+                    <option value="BAHAGIAN PENGURUSAN LATIHAN">BAHAGIAN PENGURUSAN LATIHAN</option>
+                    <option value="BAHAGIAN PERANCANGAN & PENYELIDIKAN">BAHAGIAN PERANCANGAN & PENYELIDIKAN</option>
+                    <option value="UNIT JALINAN INDUSTRI">UNIT JALINAN INDUSTRI</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full jtm-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow-lg transform active:scale-95 transition-all">
+                Masuk <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- 2. PAGE: TIMBANGAN & HANTAR -->
+    <div id="mainPage" class="hidden w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+        <!-- Header -->
+        <div class="jtm-blue p-6 text-white flex justify-between items-center">
+            <div>
+                <h1 class="font-bold text-xl">Fat to Fit JTM</h1>
+                <p id="userInfo" class="text-xs text-blue-200">Nama Pegawai | Bahagian</p>
+            </div>
+            <button onclick="logout()" class="text-white opacity-70 hover:opacity-100">
+                <i class="fa-solid fa-power-off text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Form Timbangan -->
+        <div class="p-8">
+            <form id="timbanganForm" class="space-y-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Tarikh</label>
+                        <input type="date" id="inputDate" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Berat (kg)</label>
+                        <input type="number" id="inputWeight" step="0.1" placeholder="0.0" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Tinggi (cm)</label>
+                        <input type="number" id="inputHeight" step="1" placeholder="0" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 outline-none">
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-lg transform active:scale-95 transition-all">
-                    Masuk Aplikasi <i class="fa-solid fa-arrow-right ml-2"></i>
+
+                <!-- Result Area -->
+                <div id="resultBox" class="hidden p-4 bg-blue-50 border border-blue-100 rounded-xl text-center">
+                    <p class="text-xs font-bold text-blue-600 uppercase">BMI ANDA</p>
+                    <h3 id="bmiValue" class="text-4xl font-black text-gray-800">--.-</h3>
+                    <p id="bmiStatus" class="text-sm font-bold mt-1">--</p>
+                </div>
+
+                <button type="submit" id="btnHantar" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>HANTAR KE GOOGLE SHEET</span>
                 </button>
             </form>
+
+            <div class="mt-6 pt-6 border-t border-gray-100 text-center">
+                <a href="https://docs.google.com/spreadsheets/d/1fVpq-brUT7oYhJApRttj760fNJXOo1W3xw9RMKKPwQA/edit?usp=sharing" target="_blank" class="text-blue-600 text-sm hover:underline">
+                    <i class="fa-solid fa-table mr-1"></i> Lihat Data Keseluruhan (Google Sheet)
+                </a>
+            </div>
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
-    <div id="appContainer" class="hidden flex-col min-h-screen">
-        
-        <!-- Navbar -->
-        <nav class="gradient-header text-white shadow-lg sticky top-0 z-40">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="flex justify-between items-center h-16">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-white/10 p-2 rounded-lg">
-                            <i class="fa-solid fa-wand-magic-sparkles text-xl text-yellow-300"></i>
-                        </div>
-                        <div>
-                            <h1 class="font-bold text-lg leading-tight">Fat to Fit JTM ✨</h1>
-                            <p class="text-[10px] text-blue-200 uppercase tracking-widest">Kuasakan AI Gemini</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center space-x-4">
-                        <div class="text-right hidden sm:block">
-                            <div id="navUserName" class="text-sm font-semibold">User</div>
-                            <div id="navUserDept" class="text-xs text-blue-200">Dept</div>
-                        </div>
-                        <button onclick="app.logout()" class="p-2 rounded-lg hover:bg-white/10 transition-colors text-blue-100 hover:text-white" title="Log Keluar">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="flex space-x-1 overflow-x-auto pb-0 hide-scrollbar mt-2 border-t border-blue-400/30">
-                    <button onclick="app.switchTab('dashboard')" class="nav-tab active-tab px-4 py-3 text-sm font-medium text-blue-100 border-b-2 border-transparent hover:text-white hover:border-white transition-all flex-shrink-0" data-tab="dashboard">
-                        <i class="fa-solid fa-chart-pie mr-2"></i>Dashboard
-                    </button>
-                    <button onclick="app.switchTab('input')" class="nav-tab px-4 py-3 text-sm font-medium text-blue-100 border-b-2 border-transparent hover:text-white hover:border-white transition-all flex-shrink-0" data-tab="input">
-                        <i class="fa-solid fa-plus-circle mr-2"></i>Timbangan
-                    </button>
-                    <button onclick="app.switchTab('history')" class="nav-tab px-4 py-3 text-sm font-medium text-blue-100 border-b-2 border-transparent hover:text-white hover:border-white transition-all flex-shrink-0" data-tab="history">
-                        <i class="fa-solid fa-table-list mr-2"></i>Rekod
-                    </button>
-                    <button onclick="app.switchTab('guide')" class="nav-tab px-4 py-3 text-sm font-medium text-blue-100 border-b-2 border-transparent hover:text-white hover:border-white transition-all flex-shrink-0" data-tab="guide">
-                        <i class="fa-solid fa-share-nodes mr-2"></i>Panduan Admin
-                    </button>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="flex-grow max-w-7xl mx-auto w-full p-4 md:p-6 space-y-6">
-
-            <!-- TAB 1: DASHBOARD -->
-            <section id="tab-dashboard" class="tab-content animate-fade-in space-y-6">
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="flex-1">
-                        <h2 class="text-lg font-bold text-gray-800 mb-2">Papan Pemuka Pintar ✨</h2>
-                        <p class="text-gray-600 text-sm">
-                            Selamat datang kembali! AI Gemini telah menganalisis data anda untuk memberikan gambaran kesihatan yang lebih mendalam.
-                        </p>
-                    </div>
-                    <div id="dashAiStatus" class="hidden md:block">
-                        <span class="inline-flex items-center px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-full border border-blue-100">
-                             AI Gemini Sedia Membantu ✨
-                        </span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
-                        <div class="absolute right-0 top-0 p-4 opacity-10"><i class="fa-solid fa-weight-scale text-6xl text-blue-600"></i></div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">BMI Terkini</p>
-                        <h3 id="dashBMI" class="text-3xl font-bold text-gray-800 mt-1">--.-</h3>
-                        <span id="dashStatus" class="inline-block mt-2 px-2 py-1 bg-gray-100 text-gray-500 text-xs rounded-md font-bold">Tiada Data</span>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
-                        <div class="absolute right-0 top-0 p-4 opacity-10"><i class="fa-solid fa-arrow-trend-down text-6xl text-green-600"></i></div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Perubahan Berat</p>
-                        <h3 id="dashChange" class="text-3xl font-bold text-gray-800 mt-1">--</h3>
-                        <p class="text-xs text-gray-500 mt-1">Sejak mula menyertai</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden">
-                        <div class="absolute right-0 top-0 p-4 opacity-10"><i class="fa-solid fa-sparkles text-6xl text-blue-400"></i></div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Status AI</p>
-                        <h3 class="text-3xl font-bold text-blue-600 mt-1">Aktif</h3>
-                        <p class="text-xs text-gray-500 mt-1">Gemini 2.5 Flash</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold text-gray-700"><i class="fa-solid fa-chart-line mr-2 text-blue-500"></i>Trend Berat Badan</h3>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="weightTrendChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold text-gray-700"><i class="fa-solid fa-chart-pie mr-2 text-blue-600"></i>Komposisi Kategori BMI</h3>
-                        </div>
-                        <div class="chart-container flex justify-center items-center">
-                            <canvas id="bmiDoughnutChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 2: INPUT FORM -->
-            <section id="tab-input" class="tab-content hidden animate-fade-in max-w-2xl mx-auto space-y-6">
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-                    <div class="bg-gray-50 p-6 border-b border-gray-200">
-                        <h2 class="text-lg font-bold text-gray-800">Rekod Timbangan Pegawai</h2>
-                        <p class="text-sm text-gray-500">Isi data anda dan biarkan AI memberikan maklum balas ✨</p>
-                    </div>
-                    <form id="inputForm" class="p-6 space-y-6">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
-                                <span class="block text-xs font-bold text-blue-600 uppercase tracking-wider">Nama</span>
-                                <span id="formName" class="font-semibold text-gray-700 truncate">User</span>
-                            </div>
-                            <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
-                                <span class="block text-xs font-bold text-blue-600 uppercase tracking-wider">Bahagian</span>
-                                <span id="formDept" class="font-semibold text-gray-700 truncate">Dept</span>
-                            </div>
-                            
-                            <div class="col-span-2">
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Tarikh Timbangan</label>
-                                <input type="date" id="inputDate" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Berat (kg)</label>
-                                <input type="number" id="inputWeight" step="0.1" placeholder="0.0" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">Tinggi (cm)</label>
-                                <input type="number" id="inputHeight" step="1" placeholder="0" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
-                            <i class="fa-solid fa-save"></i>
-                            <span>Simpan & Analisis BMI ✨</span>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Result Card -->
-                <div id="resultCard" class="hidden mt-6 bg-white rounded-xl shadow-lg border-l-4 border-blue-500 p-6 animate-fade-in">
-                    <div class="flex justify-between items-start flex-wrap gap-4">
-                        <div class="flex-1 min-w-[200px]">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Keputusan BMI</p>
-                            <h3 id="resBMI" class="text-5xl font-extrabold text-gray-800 mt-1">--.-</h3>
-                            <span id="resBadge" class="inline-block mt-2 px-3 py-1 bg-gray-100 rounded-full text-xs font-bold">--</span>
-                            <p id="resAdvice" class="mt-4 text-sm text-gray-600 leading-relaxed">--</p>
-                        </div>
-                        <div class="w-full md:w-auto flex flex-col gap-2">
-                            <button onclick="app.getAiTips()" class="ai-glow w-full bg-blue-50 text-blue-700 px-4 py-3 rounded-xl text-sm font-bold hover:bg-blue-100 flex items-center justify-center gap-2 transition-all">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> Tip Kesihatan AI ✨
-                            </button>
-                            <button onclick="app.getAiMenu()" class="ai-glow w-full bg-purple-50 text-purple-700 px-4 py-3 rounded-xl text-sm font-bold hover:bg-purple-100 flex items-center justify-center gap-2 transition-all">
-                                <i class="fa-solid fa-utensils"></i> Cadangan Menu ✨
-                            </button>
-                            <button onclick="app.shareResult()" class="w-full bg-gray-50 text-gray-600 px-4 py-3 rounded-xl text-sm font-bold hover:bg-gray-100 flex items-center justify-center gap-2 transition-all">
-                                <i class="fa-solid fa-share-nodes"></i> Kongsi Rekod
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- AI Content Area -->
-                    <div id="aiResponseArea" class="hidden mt-6 pt-6 border-t border-gray-100">
-                        <div class="flex items-center gap-2 mb-3">
-                            <i class="fa-solid fa-robot text-blue-600"></i>
-                            <h4 id="aiTitle" class="font-bold text-gray-800">Analisis Gemini ✨</h4>
-                        </div>
-                        <div id="aiContent" class="text-sm text-gray-700 leading-relaxed bg-blue-50/30 p-4 rounded-xl border border-blue-100/50">
-                            <!-- AI text goes here -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 3: HISTORY -->
-            <section id="tab-history" class="tab-content hidden animate-fade-in space-y-6">
-                <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200 gap-4">
-                    <div>
-                        <h2 class="font-bold text-gray-800">Sejarah Rekod Pegawai</h2>
-                        <p class="text-xs text-gray-500 uppercase tracking-tighter">Penyelarasan dengan Google Sheets JTM</p>
-                    </div>
-                    <div class="flex flex-wrap space-x-2 w-full md:w-auto">
-                        <button onclick="app.syncGoogleSheets()" id="btnSync" class="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center justify-center">
-                            <i class="fa-brands fa-google-drive mr-2"></i> Sync Cloud
-                        </button>
-                        <button onclick="app.shareSheetLink()" class="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center justify-center">
-                            <i class="fa-solid fa-link mr-2"></i> Pautan Sheet
-                        </button>
-                        <button onclick="app.clearHistory()" class="bg-red-50 text-red-600 hover:bg-red-100 px-3 py-2 rounded-lg text-sm font-bold transition-all" title="Padam Sejarah">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-50 border-b border-gray-200">
-                                <tr class="text-gray-500 text-[10px] uppercase font-bold tracking-widest">
-                                    <th class="px-6 py-4">Tarikh</th>
-                                    <th class="px-6 py-4">B/T (kg/cm)</th>
-                                    <th class="px-6 py-4 text-center">BMI</th>
-                                    <th class="px-6 py-4">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody" class="divide-y divide-gray-100 text-sm text-gray-700">
-                                <!-- JS Populated -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="emptyHistory" class="hidden p-12 text-center text-gray-400">
-                        <i class="fa-solid fa-clipboard-list text-4xl mb-3 opacity-20"></i>
-                        <p class="text-sm">Tiada rekod timbangan ditemui.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 4: GUIDE -->
-            <section id="tab-guide" class="tab-content hidden animate-fade-in max-w-4xl mx-auto space-y-6">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Panduan Pengedaran Aplikasi</h2>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        Fail HTML ini adalah aplikasi "Fat to Fit" tunggal. Anda boleh menghantar fail ini kepada pegawai lain atau menghoskan secara percuma untuk capaian pautan (link).
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-xl shadow-sm border border-l-4 border-l-teal-500 border-gray-200 p-6">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-teal-100 text-teal-700 font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3">1</span>
-                            <h3 class="font-bold text-gray-800">Hosting Percuma (Netlify)</h3>
-                        </div>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
-                            <li>Namakan fail ini sebagai <code>index.html</code>.</li>
-                            <li>Buka <a href="https://app.netlify.com/drop" target="_blank" class="text-blue-600 underline">Netlify Drop</a>.</li>
-                            <li>Seret folder yang mengandungi fail ini ke sana.</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm border border-l-4 border-l-blue-500 border-gray-200 p-6">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-blue-100 text-blue-700 font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3">2</span>
-                            <h3 class="font-bold text-gray-800">Grup WhatsApp JTM</h3>
-                        </div>
-                        <p class="text-sm text-gray-600">
-                            Hantar terus fail ini sebagai 'Document'. Pegawai hanya perlu klik dan buka menggunakan Chrome/Safari.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <footer class="bg-slate-800 text-slate-400 py-8 text-center text-[10px] mt-auto">
-            <p class="uppercase tracking-widest font-bold">Jabatan Tenaga Manusia (JTM)</p>
-            <p class="mt-1 opacity-60">Dikuasakan oleh Gemini AI & Google Cloud</p>
-        </footer>
-    </div>
-
-    <!-- TOAST -->
-    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-[100] flex items-center gap-3">
-        <i class="fa-solid fa-circle-check text-green-400"></i>
-        <span id="toastMsg" class="font-medium text-sm">Operation Successful</span>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+        <span id="toastMsg">Berjaya</span>
     </div>
 
     <script>
-        // --- GEMINI API INTEGRATION ---
-        const apiKey = ""; // Set API key as empty string per instructions
-        
-        async function callGemini(promptText) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                systemInstruction: { 
-                    parts: [{ text: "Anda adalah pakar nutrisi dan kesihatan JTM (Jabatan Tenaga Manusia). Berikan nasihat profesional, ringkas, dan bersemangat dalam Bahasa Melayu. Fokus kepada gaya hidup sihat penjawat awam." }] 
-                }
-            };
+        // Google Apps Script URL (Sila pastikan Web App anda telah di-deploy)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhFdtj2c_L91xfQ6JYvK3noY24Fty91JL3HgJyIKbUHVyLMff7H8EQqke7PpBDZpZ1VA/exec";
 
-            // Exponential Backoff Implementation
-            const fetchWithRetry = async (retries = 5, delay = 1000) => {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    if (!response.ok) throw new Error('API Error');
-                    
-                    const result = await response.json();
-                    return result.candidates?.[0]?.content?.parts?.[0]?.text;
-                } catch (error) {
-                    if (retries > 0) {
-                        await new Promise(res => setTimeout(res, delay));
-                        return fetchWithRetry(retries - 1, delay * 2);
-                    }
-                    throw error;
-                }
-            };
+        let currentUser = null;
 
-            return await fetchWithRetry();
-        }
-
-        // --- CORE APP ---
-        const CONFIG = {
-            sheetUrl: "https://docs.google.com/spreadsheets/d/1fVpq-brUT7oYhJApRttj760fNJXOo1W3xw9RMKKPwQA/edit?usp=sharing",
-            scriptUrl: "https://script.google.com/macros/s/AKfycbxhFdtj2c_L91xfQ6JYvK3noY24Fty91JL3HgJyIKbUHVyLMff7H8EQqke7PpBDZpZ1VA/exec",
-            userKey: 'jtm_user_data_v4',
-            recordsKey: 'jtm_records_data_v4'
-        };
-
-        const state = {
-            user: null,
-            records: [],
-            charts: {}
-        };
-
-        const app = {
-            init: () => {
-                const u = localStorage.getItem(CONFIG.userKey);
-                const r = localStorage.getItem(CONFIG.recordsKey);
-                if (r) state.records = JSON.parse(r);
-
-                if (u) {
-                    state.user = JSON.parse(u);
-                    app.ui.showMain();
-                } else {
-                    app.ui.showLogin();
-                }
-
-                document.getElementById('inputDate').valueAsDate = new Date();
-                document.getElementById('loginForm').addEventListener('submit', app.handleLogin);
-                document.getElementById('inputForm').addEventListener('submit', app.handleInput);
-            },
-
-            handleLogin: (e) => {
-                e.preventDefault();
-                const name = document.getElementById('loginName').value.trim();
-                const dept = document.getElementById('loginDept').value;
-                if(name && dept) {
-                    state.user = { name, dept };
-                    localStorage.setItem(CONFIG.userKey, JSON.stringify(state.user));
-                    app.ui.showMain();
-                    app.utils.toast(`Selamat datang, ${name}`);
-                }
-            },
-
-            handleInput: (e) => {
-                e.preventDefault();
-                const weight = parseFloat(document.getElementById('inputWeight').value);
-                const height = parseFloat(document.getElementById('inputHeight').value);
-                const date = document.getElementById('inputDate').value;
-                
-                const hM = height / 100;
-                const bmi = (weight / (hM * hM)).toFixed(1);
-                const analysis = app.logic.analyze(bmi);
-
-                const record = {
-                    id: Date.now(),
-                    date, weight, height, bmi,
-                    status: analysis.status,
-                    color: analysis.color,
-                    advice: analysis.advice
-                };
-
-                state.records.push(record);
-                state.records.sort((a,b) => new Date(b.date) - new Date(a.date));
-                localStorage.setItem(CONFIG.recordsKey, JSON.stringify(state.records));
-                
-                app.ui.renderResult(record);
-                app.ui.updateDashboard();
-                app.ui.updateHistory();
-                app.utils.toast("Rekod disimpan! ✨");
-            },
-
-            // ✨ AI FEATURES ✨
-            getAiTips: async () => {
-                if (state.records.length === 0) return;
-                const r = state.records[0];
-                app.ui.showAiLoading("Sedang menjana tip kesihatan...");
-                
-                const prompt = `Nama saya ${state.user.name}. Berat saya ${r.weight}kg dengan tinggi ${r.height}cm. BMI saya adalah ${r.bmi} (${r.status}). Berikan 3 tip ringkas untuk saya capai berat ideal di pejabat.`;
-                
-                try {
-                    const response = await callGemini(prompt);
-                    app.ui.displayAiResponse("Tip Kesihatan AI ✨", response);
-                } catch (e) {
-                    app.utils.toast("Gagal memanggil AI. Periksa API Key.", "error");
-                }
-            },
-
-            getAiMenu: async () => {
-                if (state.records.length === 0) return;
-                const r = state.records[0];
-                app.ui.showAiLoading("Menjana cadangan menu harian...");
-                
-                const prompt = `Berdasarkan BMI saya ${r.bmi} (${r.status}), cadangkan menu makanan sihat (Sarapan, Makan Tengahari, Makan Malam) yang sesuai untuk citarasa Malaysia dan mudah didapati di kantin pejabat.`;
-                
-                try {
-                    const response = await callGemini(prompt);
-                    app.ui.displayAiResponse("Cadangan Menu Sihat ✨", response);
-                } catch (e) {
-                    app.utils.toast("Ralat AI. Sila cuba lagi.", "error");
-                }
-            },
-
-            shareResult: async () => {
-                if (state.records.length === 0) return;
-                const r = state.records[0];
-                const text = `Nama: ${state.user.name}\nTarikh: ${r.date}\nBMI: ${r.bmi} (${r.status})\n\nJom sertai Fat to Fit JTM!`;
-                
-                if (navigator.share) {
-                    try { await navigator.share({ title: 'BMI JTM', text }); } 
-                    catch (err) { app.utils.copyToClipboard(text); }
-                } else {
-                    app.utils.copyToClipboard(text);
-                }
-            },
-
-            shareSheetLink: async () => {
-                if (navigator.share) {
-                    try { await navigator.share({ title: 'Pautan Sheet JTM', url: CONFIG.sheetUrl }); } 
-                    catch (err) { app.utils.copyToClipboard(CONFIG.sheetUrl); }
-                } else {
-                    app.utils.copyToClipboard(CONFIG.sheetUrl);
-                }
-            },
-
-            logout: () => {
-                if(confirm("Log keluar?")) {
-                    localStorage.removeItem(CONFIG.userKey);
-                    location.reload();
-                }
-            },
-
-            clearHistory: () => {
-                if(confirm("Padam sejarah rekod peranti ini?")) {
-                    state.records = [];
-                    localStorage.setItem(CONFIG.recordsKey, JSON.stringify(state.records));
-                    app.ui.updateDashboard();
-                    app.ui.updateHistory();
-                    app.utils.toast("Sejarah dikosongkan.");
-                }
-            },
-
-            syncGoogleSheets: async () => {
-                if(state.records.length === 0) return app.utils.toast("Tiada rekod.", "error");
-                const btn = document.getElementById('btnSync');
-                const org = btn.innerHTML;
-                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Hantar...`;
-                btn.disabled = true;
-
-                try {
-                    await fetch(CONFIG.scriptUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ name: state.user.name, dept: state.user.dept, ...state.records[0] })
-                    });
-                    app.utils.toast("Penyelarasan Cloud Berjaya! ☁️");
-                } catch(e) { app.utils.toast("Gagal berhubung ke Cloud.", "error"); } 
-                finally { btn.innerHTML = org; btn.disabled = false; }
-            },
-
-            switchTab: (tabId) => {
-                document.querySelectorAll('.nav-tab').forEach(t => {
-                    const isActive = t.dataset.tab === tabId;
-                    t.classList.toggle('text-white', isActive);
-                    t.classList.toggle('border-white', isActive);
-                    t.classList.toggle('text-blue-100', !isActive);
-                    t.classList.toggle('border-transparent', !isActive);
-                });
-                
-                document.querySelectorAll('.tab-content').forEach(s => {
-                    s.classList.toggle('hidden', s.id !== `tab-${tabId}`);
-                });
-
-                if(tabId === 'dashboard') app.ui.updateDashboard();
-            },
-
-            logic: {
-                analyze: (bmi) => {
-                    if(bmi < 18.5) return { status: 'Kurang Berat', color: 'text-blue-600 bg-blue-100', advice: 'Tumpukan kepada pengambilan kalori berkualiti.' };
-                    if(bmi < 25) return { status: 'Normal', color: 'text-green-600 bg-green-100', advice: 'Kekalkan kecergasan fizikal anda.' };
-                    if(bmi < 30) return { status: 'Lebih Berat', color: 'text-yellow-600 bg-yellow-100', advice: 'Amalkan defisit kalori dan aktif bergerak.' };
-                    return { status: 'Obesiti', color: 'text-red-600 bg-red-100', advice: 'Sila dapatkan konsultasi kesihatan JTM.' };
-                }
-            },
-
-            ui: {
-                showLogin: () => {
-                    document.getElementById('loginOverlay').classList.remove('hidden');
-                    document.getElementById('appContainer').classList.add('hidden');
-                },
-                showMain: () => {
-                    document.getElementById('loginOverlay').classList.add('hidden');
-                    document.getElementById('appContainer').classList.remove('hidden');
-                    document.getElementById('appContainer').classList.add('flex');
-                    document.getElementById('navUserName').textContent = state.user.name;
-                    document.getElementById('navUserDept').textContent = state.user.dept;
-                    document.getElementById('formName').textContent = state.user.name;
-                    document.getElementById('formDept').textContent = state.user.dept;
-                    app.ui.updateDashboard();
-                    app.ui.updateHistory();
-                },
-                renderResult: (rec) => {
-                    document.getElementById('resBMI').textContent = rec.bmi;
-                    document.getElementById('resBadge').textContent = rec.status;
-                    document.getElementById('resBadge').className = `inline-block mt-2 px-3 py-1 rounded-full text-xs font-bold ${rec.color}`;
-                    document.getElementById('resAdvice').textContent = rec.advice;
-                    document.getElementById('resultCard').classList.remove('hidden');
-                    document.getElementById('aiResponseArea').classList.add('hidden'); // Hide old AI content
-                },
-                showAiLoading: (msg) => {
-                    const area = document.getElementById('aiResponseArea');
-                    const content = document.getElementById('aiContent');
-                    area.classList.remove('hidden');
-                    content.innerHTML = `<div class="flex items-center gap-2"><i class="fa-solid fa-circle-notch fa-spin"></i> ${msg}</div>`;
-                    content.scrollIntoView({ behavior: 'smooth' });
-                },
-                displayAiResponse: (title, text) => {
-                    document.getElementById('aiTitle').textContent = title;
-                    document.getElementById('aiContent').innerHTML = text.replace(/\n/g, '<br>');
-                },
-                updateHistory: () => {
-                    const tbody = document.getElementById('historyTableBody');
-                    const empty = document.getElementById('emptyHistory');
-                    tbody.innerHTML = '';
-                    if(state.records.length === 0) { empty.classList.remove('hidden'); return; }
-                    empty.classList.add('hidden');
-                    state.records.forEach(r => {
-                        tbody.innerHTML += `
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 font-medium text-gray-900">${new Date(r.date).toLocaleDateString('ms-MY')}</td>
-                            <td class="px-6 py-4">${r.weight}kg / ${r.height}cm</td>
-                            <td class="px-6 py-4 text-center font-bold">${r.bmi}</td>
-                            <td class="px-6 py-4"><span class="text-[9px] font-black px-2 py-1 rounded-full ${r.color}">${r.status}</span></td>
-                        </tr>`;
-                    });
-                },
-                updateDashboard: () => {
-                    if(state.records.length === 0) return;
-                    const latest = state.records[0];
-                    const first = state.records[state.records.length - 1];
-                    document.getElementById('dashBMI').textContent = latest.bmi;
-                    document.getElementById('dashStatus').textContent = latest.status;
-                    document.getElementById('dashStatus').className = `inline-block mt-2 px-2 py-1 text-xs rounded-md font-bold ${latest.color}`;
-                    const diff = (latest.weight - first.weight).toFixed(1);
-                    document.getElementById('dashChange').textContent = (diff > 0 ? "+" : "") + diff + " kg";
-                    document.getElementById('dashChange').className = `text-3xl font-bold mt-1 ${diff <= 0 ? 'text-green-600' : 'text-red-600'}`;
-                    document.getElementById('dashCount').textContent = state.records.length;
-
-                    const chron = [...state.records].sort((a,b) => new Date(a.date) - new Date(b.date));
-                    const labels = chron.map(r => new Date(r.date).toLocaleDateString('ms-MY', {day:'2-digit', month:'short'}));
-                    const dataW = chron.map(r => r.weight);
-
-                    if(state.charts.trend) state.charts.trend.destroy();
-                    state.charts.trend = new Chart(document.getElementById('weightTrendChart'), {
-                        type: 'line', data: { labels, datasets: [{ label: 'Berat', data: dataW, borderColor: '#3b82f6', tension: 0.3, fill: true, backgroundColor: 'rgba(59, 130, 246, 0.05)' }] },
-                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {display: false} } }
-                    });
-
-                    const counts = { 'Kurang Berat':0, 'Normal':0, 'Lebih Berat':0, 'Obesiti':0 };
-                    state.records.forEach(r => counts[r.status] !== undefined ? counts[r.status]++ : null);
-                    if(state.charts.bmi) state.charts.bmi.destroy();
-                    state.charts.bmi = new Chart(document.getElementById('bmiDoughnutChart'), {
-                        type: 'doughnut', data: { labels: Object.keys(counts), datasets: [{ data: Object.values(counts), backgroundColor: ['#93c5fd', '#86efac', '#fde047', '#fca5a5'] }] },
-                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {position: 'bottom'} } }
-                    });
-                }
-            },
-            utils: {
-                toast: (msg, type='success') => {
-                    const t = document.getElementById('toast');
-                    document.getElementById('toastMsg').textContent = msg;
-                    t.classList.remove('opacity-0');
-                    setTimeout(()=>t.classList.add('opacity-0'), 3000);
-                },
-                copyToClipboard: (text) => {
-                    const el = document.createElement('textarea');
-                    el.value = text; document.body.appendChild(el);
-                    el.select(); document.execCommand('copy');
-                    document.body.removeChild(el);
-                    app.utils.toast("Disalin ke papan klip!");
-                }
+        // Init
+        window.onload = () => {
+            document.getElementById('inputDate').valueAsDate = new Date();
+            const savedUser = localStorage.getItem('jtm_user_basic');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showMain();
             }
         };
 
-        document.addEventListener('DOMContentLoaded', app.init);
+        // Login Logic
+        document.getElementById('loginForm').onsubmit = (e) => {
+            e.preventDefault();
+            const name = document.getElementById('loginName').value.trim();
+            const dept = document.getElementById('loginDept').value;
+            
+            currentUser = { name, dept };
+            localStorage.setItem('jtm_user_basic', JSON.stringify(currentUser));
+            showMain();
+        };
+
+        function showMain() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('mainPage').classList.remove('hidden');
+            document.getElementById('userInfo').textContent = `${currentUser.name} | ${currentUser.dept}`;
+        }
+
+        function logout() {
+            if (confirm("Log keluar?")) {
+                localStorage.removeItem('jtm_user_basic');
+                location.reload();
+            }
+        }
+
+        // Calculation & Submission
+        document.getElementById('timbanganForm').onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const weight = parseFloat(document.getElementById('inputWeight').value);
+            const height = parseFloat(document.getElementById('inputHeight').value);
+            const date = document.getElementById('inputDate').value;
+            
+            // Calc BMI
+            const bmi = (weight / ((height/100) * (height/100))).toFixed(1);
+            let status = "";
+            let color = "";
+
+            if(bmi < 18.5) { status = "KURANG BERAT"; color = "text-blue-600"; }
+            else if(bmi < 25) { status = "NORMAL"; color = "text-green-600"; }
+            else if(bmi < 30) { status = "LEBIH BERAT"; color = "text-yellow-600"; }
+            else { status = "OBESITI"; color = "text-red-600"; }
+
+            // Update UI Result
+            document.getElementById('bmiValue').textContent = bmi;
+            document.getElementById('bmiStatus').textContent = status;
+            document.getElementById('bmiStatus').className = `text-sm font-bold mt-1 ${color}`;
+            document.getElementById('resultBox').classList.remove('hidden');
+
+            // Send to Google Sheet
+            const btn = document.getElementById('btnHantar');
+            const orgText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Menghantar...`;
+
+            const payload = {
+                name: currentUser.name,
+                dept: currentUser.dept,
+                date: date,
+                weight: weight,
+                height: height,
+                bmi: bmi,
+                status: status
+            };
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                showToast("✅ Berjaya hantar ke Google Sheet!");
+            } catch (error) {
+                showToast("❌ Ralat penghantaran. Cuba lagi.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = orgText;
+            }
+        };
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.remove('opacity-0');
+            setTimeout(() => t.classList.add('opacity-0'), 3000);
+        }
     </script>
 </body>
 </html>
