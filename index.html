@@ -69,11 +69,24 @@
 </head>
 <body class="text-gray-800 flex flex-col items-center py-8 px-4">
 
+    <!-- Chosen Palette: JTM Blue & Slate Neutrals -->
+    <!-- Application Structure Plan: 
+         - Halaman Mula: Penjenamaan Cabaran 60 Hari & Log Masuk.
+         - Halaman Utama: Input timbangan, pengiraan BMI dinamik dengan ikon lucu.
+         - Maklumat: Panduan pemakanan suku-suku separuh berpandukan BMI.
+         - Admin: Akses terhad kepada rekod Google Sheet.
+    -->
+    <!-- Visualization & Content Choices:
+         - Header: Poster cabaran (lokal/fallback).
+         - Feedback: Ikon animasi lucu (Shrimp, Stars, Cookie, Dizzy).
+         - Access Control: 'Admin' login reveals shared data link.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
     <!-- 1. HALAMAN: LOG MASUK -->
     <div id="loginPage" class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in">
         <!-- Header Image for Login -->
         <div class="header-container">
-            <!-- Sila pastikan fail imej 'Gemini_Generated_Image_7er86x7er86x7er8.jpg' berada dalam folder yang sama -->
             <img src="Gemini_Generated_Image_7er86x7er86x7er8.jpg" 
                  alt="Header Cabaran JTM" 
                  onerror="this.src='https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80';">
@@ -81,8 +94,8 @@
         
         <div class="p-8">
             <div class="text-center mb-8">
-                <!-- Tukar kepada Log Masuk sahaja mengikut permintaan user -->
-                <h2 class="text-2xl font-bold text-gray-800">Log Masuk</h2>
+                <!-- Tajuk ditukar kepada FAT to FIT "CABARAN 60 HARI" mengikut permintaan -->
+                <h2 class="text-2xl font-bold text-gray-800">FAT to FIT "CABARAN 60 HARI"</h2>
                 <p class="text-sm text-gray-500 mt-2 italic font-medium">"Langkah Ke Arah Hidup Lebih Sihat"</p>
             </div>
             
@@ -153,7 +166,7 @@
                 <!-- Kawasan Keputusan -->
                 <div id="resultBox" class="hidden p-6 bg-blue-50 border border-blue-100 rounded-2xl shadow-inner">
                     <div id="bmiIconContainer" class="mb-4 flex justify-center text-6xl icon-pop">
-                        <!-- Ikon dimasukkan oleh JS -->
+                        <!-- Icon dimasukkan oleh JS -->
                     </div>
                     <div class="text-center">
                         <p class="text-xs font-bold text-blue-600 uppercase tracking-widest">BMI ANDA</p>
@@ -283,7 +296,7 @@
                 status = "OBESITI (Alamak!)"; 
                 colorClass = "text-red-600"; bgStatusClass = "bg-red-100 text-red-700";
                 iconClass = "fa-solid fa-face-dizzy"; animClass = "fa-spin fa-spin-reverse text-red-500";
-                advice = "Jangan putus asa! Kurangkan nasi putih dan makanan diproses.";
+                advice = "Jangan putus asa! Kurangkan nasi putih dan makanan diproses. Konsisten adalah kunci.";
             }
 
             document.getElementById('bmiIconContainer').innerHTML = `<i class="${iconClass} ${animClass}"></i>`;
