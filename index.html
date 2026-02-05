@@ -8,7 +8,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome for Icons (v6.4.0) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
@@ -31,11 +31,36 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Animasi tersuai untuk keputusan */
+        .icon-pop {
+            animation: pop 0.5s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body class="text-gray-800 min-h-screen flex items-center justify-center p-4">
 
-    <!-- 1. PAGE: LOG IN -->
+    <!-- Chosen Palette: JTM Blue & Friendly Neutrals -->
+    <!-- Application Structure Plan:
+         - Halaman Log Masuk: Pengenalan ringkas pegawai.
+         - Halaman Utama: Gabungan borang timbangan dan kandungan pendidikan.
+         - Interaksi: Kiraan BMI dinamik dengan ikon animasi lucu.
+         - Akses Admin: Kebolehlihatan pautan data berdasarkan nama pengguna.
+    -->
+    <!-- Visualization & Content Choices:
+         - Kurang Berat: fa-shrimp (Ikon udang yang lucu)
+         - Normal: fa-face-grin-stars (Ikon mantap)
+         - Berat Berlebihan: fa-cookie-bite (Ikon sikit lagi)
+         - Obesiti: fa-face-dizzy (Ikon alamak)
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- 1. HALAMAN: LOG MASUK -->
     <div id="loginPage" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4 text-blue-800">
@@ -70,9 +95,9 @@
         </form>
     </div>
 
-    <!-- 2. PAGE: TIMBANGAN & HANTAR -->
+    <!-- 2. HALAMAN: TIMBANGAN & HANTAR -->
     <div id="mainPage" class="hidden w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in my-8">
-        <!-- Header -->
+        <!-- Kepala Halaman -->
         <div class="jtm-blue p-6 text-white flex justify-between items-center">
             <div>
                 <h1 class="font-bold text-xl">Fat to Fit JTM</h1>
@@ -83,7 +108,7 @@
             </button>
         </div>
 
-        <!-- Form Timbangan -->
+        <!-- Borang Timbangan -->
         <div class="p-8">
             <form id="timbanganForm" class="space-y-6">
                 <div class="grid grid-cols-2 gap-4">
@@ -101,55 +126,58 @@
                     </div>
                 </div>
 
-                <!-- Result Area -->
-                <div id="resultBox" class="hidden p-4 bg-blue-50 border border-blue-100 rounded-xl text-center">
-                    <p class="text-xs font-bold text-blue-600 uppercase">BMI ANDA</p>
-                    <h3 id="bmiValue" class="text-4xl font-black text-gray-800">--.-</h3>
-                    <p id="bmiStatus" class="text-sm font-bold mt-1">--</p>
+                <!-- Kawasan Keputusan dengan Ikon Animasi -->
+                <div id="resultBox" class="hidden p-6 bg-blue-50 border border-blue-100 rounded-xl">
+                    <div id="bmiIconContainer" class="mb-4 flex justify-center text-6xl icon-pop">
+                        <!-- Ikon dimasukkan oleh JS -->
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs font-bold text-blue-600 uppercase">BMI ANDA</p>
+                        <h3 id="bmiValue" class="text-4xl font-black text-gray-800">--.-</h3>
+                        <p id="bmiStatus" class="text-sm font-bold mt-1">--</p>
+                    </div>
+
+                    <!-- Panduan Pemakanan Peribadi -->
+                    <div id="personalizedAdvice" class="mt-6 p-4 bg-white rounded-lg border border-blue-200 shadow-sm animate-fade-in">
+                        <p class="text-xs font-bold text-blue-800 uppercase mb-2 flex items-center">
+                            <i class="fa-solid fa-lightbulb mr-2 text-yellow-500"></i> Panduan Makan Anda:
+                        </p>
+                        <p id="adviceText" class="text-sm text-gray-700 leading-relaxed italic">
+                            Sila buat timbangan untuk melihat panduan khusus.
+                        </p>
+                    </div>
                 </div>
 
                 <button type="submit" id="btnHantar" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
                     <i class="fa-solid fa-paper-plane"></i>
-                    <span>HANTAR KE GOOGLE SHEET</span>
+                    <span>HANTAR UNTUK REKOD</span>
                 </button>
             </form>
 
-            <!-- Bahagian Panduan Pemakanan Seimbang (Baru Ditambah) -->
+            <!-- Kandungan Pendidikan Umum -->
             <div class="mt-8 pt-8 border-t border-gray-100">
                 <h3 class="text-md font-bold text-gray-800 mb-4 flex items-center">
-                    <i class="fa-solid fa-utensils mr-2 text-orange-500"></i> Panduan Pemakanan Seimbang
+                    <i class="fa-solid fa-plate-wheat mr-2 text-orange-500"></i> Asas Suku-Suku Separuh
                 </h3>
-                <div class="space-y-4">
-                    <div class="bg-orange-50 p-4 rounded-xl border border-orange-100">
-                        <p class="text-xs font-bold text-orange-700 uppercase mb-2">Konsep Suku-Suku Separuh</p>
-                        <ul class="text-sm text-gray-700 space-y-2">
-                            <li class="flex items-start">
-                                <span class="text-orange-500 mr-2">●</span>
-                                <span><strong>Suku Pinggan:</strong> Karbohidrat (Nasi, Roti, Bijirin)</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-orange-500 mr-2">●</span>
-                                <span><strong>Suku Pinggan:</strong> Protein (Ikan, Ayam, Daging, Kekacang)</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-orange-500 mr-2">●</span>
-                                <span><strong>Separuh Pinggan:</strong> Sayur-sayuran dan Buah-buahan</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-3 text-[11px]">
-                        <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 flex items-center">
-                            <i class="fa-solid fa-droplet text-blue-500 mr-2"></i> Minum 8 gelas air sehari
-                        </div>
-                        <div class="bg-red-50 p-3 rounded-lg border border-red-100 flex items-center">
-                            <i class="fa-solid fa-ban text-red-500 mr-2"></i> Kurangkan gula & garam
-                        </div>
-                    </div>
+                <div class="bg-orange-50 p-4 rounded-xl border border-orange-100">
+                    <ul class="text-xs text-gray-700 space-y-2">
+                        <li class="flex items-start">
+                            <span class="text-orange-500 mr-2 font-bold">1/4</span>
+                            <span><strong>Karbohidrat:</strong> Nasi, Roti, Bijirin (Tenaga)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-orange-500 mr-2 font-bold">1/4</span>
+                            <span><strong>Protein:</strong> Ikan, Ayam, Daging, Kekacang (Otot)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-orange-500 mr-2 font-bold">1/2</span>
+                            <span><strong>Serat:</strong> Sayur & Buah (Penghadaman & Vitamin)</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Admin Section Only -->
+            <!-- Bahagian Admin Sahaja -->
             <div id="adminSection" class="hidden mt-6 pt-6 border-t border-gray-100 text-center">
                 <div class="bg-gray-50 p-4 rounded-lg border border-dashed border-gray-300">
                     <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Panel Admin Sahaja</p>
@@ -161,8 +189,8 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+    <!-- Notifikasi Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-center">
         <span id="toastMsg">Berjaya</span>
     </div>
 
@@ -172,7 +200,7 @@
 
         let currentUser = null;
 
-        // Init
+        // Permulaan
         window.onload = () => {
             document.getElementById('inputDate').valueAsDate = new Date();
             const savedUser = localStorage.getItem('jtm_user_basic');
@@ -182,7 +210,7 @@
             }
         };
 
-        // Login Logic
+        // Logik Log Masuk
         document.getElementById('loginForm').onsubmit = (e) => {
             e.preventDefault();
             const name = document.getElementById('loginName').value.trim();
@@ -198,7 +226,6 @@
             document.getElementById('mainPage').classList.remove('hidden');
             document.getElementById('userInfo').textContent = `${currentUser.name} | ${currentUser.dept}`;
 
-            // Admin Access Check
             const adminSection = document.getElementById('adminSection');
             if (currentUser.name.toLowerCase() === 'admin') {
                 adminSection.classList.remove('hidden');
@@ -214,7 +241,7 @@
             }
         }
 
-        // Calculation & Submission
+        // Pengiraan & Penghantaran
         document.getElementById('timbanganForm').onsubmit = async (e) => {
             e.preventDefault();
             
@@ -222,23 +249,58 @@
             const height = parseFloat(document.getElementById('inputHeight').value);
             const date = document.getElementById('inputDate').value;
             
-            // Calc BMI
+            // Kira BMI
             const bmi = (weight / ((height/100) * (height/100))).toFixed(1);
             let status = "";
-            let color = "";
+            let colorClass = "";
+            let iconClass = "";
+            let animClass = "";
+            let advice = "";
 
-            if(bmi < 18.5) { status = "KURANG BERAT"; color = "text-blue-600"; }
-            else if(bmi < 25) { status = "NORMAL"; color = "text-green-600"; }
-            else if(bmi < 30) { status = "LEBIH BERAT"; color = "text-yellow-600"; }
-            else { status = "OBESITI"; color = "text-red-600"; }
+            if(bmi < 18.5) { 
+                status = "KURANG BERAT (Udang Kering)"; 
+                colorClass = "text-blue-600"; 
+                iconClass = "fa-solid fa-shrimp"; 
+                animClass = "fa-beat text-blue-400";
+                advice = "Anda perlu tingkatkan kalori berkhasiat! Tambah 'extra' protein dan lemak sihat seperti kacang dan avokado. Makan 5-6 kali sehari dalam hidangan kecil.";
+            }
+            else if(bmi < 25) { 
+                status = "NORMAL (Mantap Boss)"; 
+                colorClass = "text-green-600"; 
+                iconClass = "fa-solid fa-face-grin-stars"; 
+                animClass = "fa-bounce text-green-500";
+                advice = "Hebat! Kekalkan momentum ini. Pastikan pilihan lauk yang pelbagai dan kurangkan garam dalam masakan.";
+            }
+            else if(bmi < 30) { 
+                status = "LEBIH BERAT (Sikit Lagi)"; 
+                colorClass = "text-yellow-600"; 
+                iconClass = "fa-solid fa-cookie-bite"; 
+                animClass = "fa-shake text-yellow-500";
+                advice = "Fokus pada 'Separuh Pinggan' sayuran. Kurangkan minuman manis di kantin dan mulakan aktiviti berjalan 10k langkah sehari.";
+            }
+            else { 
+                status = "OBESITI (Alamak!)"; 
+                colorClass = "text-red-600"; 
+                iconClass = "fa-solid fa-face-dizzy"; 
+                animClass = "fa-spin fa-spin-reverse text-red-500";
+                advice = "Jangan putus asa! Elakkan makanan diproses dan kurangkan nasi putih secara berperingkat.";
+            }
 
-            // Update UI Result
+            // Kemaskini Paparan Keputusan
+            document.getElementById('bmiIconContainer').innerHTML = `<i class="${iconClass} ${animClass}"></i>`;
             document.getElementById('bmiValue').textContent = bmi;
             document.getElementById('bmiStatus').textContent = status;
-            document.getElementById('bmiStatus').className = `text-sm font-bold mt-1 ${color}`;
+            document.getElementById('bmiStatus').className = `text-sm font-bold mt-1 ${colorClass}`;
+            document.getElementById('adviceText').textContent = advice;
             document.getElementById('resultBox').classList.remove('hidden');
 
-            // Send to Google Sheet
+            // Tetapkan semula animasi pop
+            const iconContainer = document.getElementById('bmiIconContainer');
+            iconContainer.classList.remove('icon-pop');
+            void iconContainer.offsetWidth; 
+            iconContainer.classList.add('icon-pop');
+
+            // Hantar ke Google Sheet
             const btn = document.getElementById('btnHantar');
             const orgText = btn.innerHTML;
             btn.disabled = true;
@@ -262,7 +324,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                showToast("✅ Berjaya hantar ke Google Sheet!");
+                showToast("✅ Berjaya hantar untuk rekod!");
             } catch (error) {
                 showToast("❌ Ralat penghantaran. Cuba lagi.");
             } finally {
