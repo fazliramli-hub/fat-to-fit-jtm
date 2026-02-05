@@ -16,7 +16,14 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            /* Menggunakan gambar yang dimuat naik sebagai latar belakang */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('Gemini_Generated_Image_7er86x7er86x7er8.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
         }
 
         .jtm-blue {
@@ -41,33 +48,24 @@
             0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
+
+        /* Glassmorphism effect for background readability */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
     </style>
 </head>
-<body class="text-gray-800 min-h-screen flex items-center justify-center p-4">
-
-    <!-- Chosen Palette: JTM Blue & Friendly Neutrals -->
-    <!-- Application Structure Plan:
-         - Halaman Log Masuk: Pengenalan ringkas pegawai.
-         - Halaman Utama: Gabungan borang timbangan dan kandungan pendidikan.
-         - Interaksi: Kiraan BMI dinamik dengan ikon animasi lucu.
-         - Akses Admin: Kebolehlihatan pautan data berdasarkan nama pengguna.
-    -->
-    <!-- Visualization & Content Choices:
-         - Kurang Berat: fa-shrimp (Ikon udang yang lucu)
-         - Normal: fa-face-grin-stars (Ikon mantap)
-         - Berat Berlebihan: fa-cookie-bite (Ikon sikit lagi)
-         - Obesiti: fa-face-dizzy (Ikon alamak)
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<body class="text-gray-800 flex items-center justify-center p-4">
 
     <!-- 1. HALAMAN: LOG MASUK -->
-    <div id="loginPage" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+    <div id="loginPage" class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 animate-fade-in border-t-4 border-blue-600">
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4 text-blue-800">
-                <i class="fa-solid fa-user-circle text-4xl"></i>
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 mb-4 text-blue-800 shadow-inner">
+                <i class="fa-solid fa-user-shield text-4xl"></i>
             </div>
             <h2 class="text-2xl font-bold text-gray-800">Log Masuk Pegawai</h2>
-            <p class="text-sm text-gray-500 mt-2">Sila kenal pasti diri anda untuk memulakan timbangan.</p>
+            <p class="text-sm text-gray-500 mt-2 italic">"Langkah Ke Arah Hidup Lebih Sihat"</p>
         </div>
         
         <form id="loginForm" class="space-y-5">
@@ -89,21 +87,23 @@
                     <option value="UNIT JALINAN INDUSTRI">UNIT JALINAN INDUSTRI</option>
                 </select>
             </div>
-            <button type="submit" class="w-full jtm-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow-lg transform active:scale-95 transition-all">
-                Masuk <i class="fa-solid fa-arrow-right ml-2"></i>
+            <button type="submit" class="w-full jtm-blue hover:bg-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transform active:scale-95 transition-all flex items-center justify-center gap-2">
+                MASUK KE CABARAN <i class="fa-solid fa-fire text-orange-400"></i>
             </button>
         </form>
     </div>
 
     <!-- 2. HALAMAN: TIMBANGAN & HANTAR -->
-    <div id="mainPage" class="hidden w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in my-8">
+    <div id="mainPage" class="hidden w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-in my-8">
         <!-- Kepala Halaman -->
-        <div class="jtm-blue p-6 text-white flex justify-between items-center">
+        <div class="jtm-blue p-6 text-white flex justify-between items-center shadow-lg">
             <div>
-                <h1 class="font-bold text-xl">Fat to Fit JTM</h1>
+                <h1 class="font-bold text-xl flex items-center gap-2">
+                    <i class="fa-solid fa-dumbbell"></i> FAT TO FIT JTM
+                </h1>
                 <p id="userInfo" class="text-xs text-blue-200">Nama Pegawai | Bahagian</p>
             </div>
-            <button onclick="logout()" class="text-white opacity-70 hover:opacity-100">
+            <button onclick="logout()" class="text-white opacity-70 hover:opacity-100 transition-opacity">
                 <i class="fa-solid fa-power-off text-lg"></i>
             </button>
         </div>
@@ -113,7 +113,7 @@
             <form id="timbanganForm" class="space-y-6">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="col-span-2">
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Tarikh</label>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Tarikh Timbangan</label>
                         <input type="date" id="inputDate" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 outline-none">
                     </div>
                     <div>
@@ -127,14 +127,14 @@
                 </div>
 
                 <!-- Kawasan Keputusan dengan Ikon Animasi -->
-                <div id="resultBox" class="hidden p-6 bg-blue-50 border border-blue-100 rounded-xl">
+                <div id="resultBox" class="hidden p-6 bg-blue-50 border border-blue-100 rounded-xl shadow-inner">
                     <div id="bmiIconContainer" class="mb-4 flex justify-center text-6xl icon-pop">
                         <!-- Ikon dimasukkan oleh JS -->
                     </div>
                     <div class="text-center">
-                        <p class="text-xs font-bold text-blue-600 uppercase">BMI ANDA</p>
-                        <h3 id="bmiValue" class="text-4xl font-black text-gray-800">--.-</h3>
-                        <p id="bmiStatus" class="text-sm font-bold mt-1">--</p>
+                        <p class="text-xs font-bold text-blue-600 uppercase tracking-widest">BMI ANDA</p>
+                        <h3 id="bmiValue" class="text-5xl font-black text-gray-800">--.-</h3>
+                        <p id="bmiStatus" class="text-sm font-bold mt-2 px-3 py-1 rounded-full inline-block">--</p>
                     </div>
 
                     <!-- Panduan Pemakanan Peribadi -->
@@ -148,7 +148,7 @@
                     </div>
                 </div>
 
-                <button type="submit" id="btnHantar" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
+                <button type="submit" id="btnHantar" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2 transform active:scale-95">
                     <i class="fa-solid fa-paper-plane"></i>
                     <span>HANTAR UNTUK REKOD</span>
                 </button>
@@ -162,16 +162,16 @@
                 <div class="bg-orange-50 p-4 rounded-xl border border-orange-100">
                     <ul class="text-xs text-gray-700 space-y-2">
                         <li class="flex items-start">
-                            <span class="text-orange-500 mr-2 font-bold">1/4</span>
+                            <span class="text-orange-600 mr-2 font-bold">1/4</span>
                             <span><strong>Karbohidrat:</strong> Nasi, Roti, Bijirin (Tenaga)</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="text-orange-500 mr-2 font-bold">1/4</span>
+                            <span class="text-orange-600 mr-2 font-bold">1/4</span>
                             <span><strong>Protein:</strong> Ikan, Ayam, Daging, Kekacang (Otot)</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="text-orange-500 mr-2 font-bold">1/2</span>
-                            <span><strong>Serat:</strong> Sayur & Buah (Penghadaman & Vitamin)</span>
+                            <span class="text-orange-600 mr-2 font-bold">1/2</span>
+                            <span><strong>Serat:</strong> Sayur & Buah (Penghadaman)</span>
                         </li>
                     </ul>
                 </div>
@@ -179,10 +179,10 @@
 
             <!-- Bahagian Admin Sahaja -->
             <div id="adminSection" class="hidden mt-6 pt-6 border-t border-gray-100 text-center">
-                <div class="bg-gray-50 p-4 rounded-lg border border-dashed border-gray-300">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Panel Admin Sahaja</p>
-                    <a href="https://docs.google.com/spreadsheets/d/1fVpq-brUT7oYhJApRttj760fNJXOo1W3xw9RMKKPwQA/edit?usp=sharing" target="_blank" class="text-blue-600 text-sm font-bold hover:underline">
-                        <i class="fa-solid fa-table mr-1"></i> Lihat Data Keseluruhan (Google Sheet)
+                <div class="bg-gray-100 p-4 rounded-lg border border-dashed border-gray-400">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase mb-2">Panel Admin Sahaja</p>
+                    <a href="https://docs.google.com/spreadsheets/d/1fVpq-brUT7oYhJApRttj760fNJXOo1W3xw9RMKKPwQA/edit?usp=sharing" target="_blank" class="text-blue-700 text-sm font-bold hover:underline flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-table"></i> Lihat Data Keseluruhan (Sheet)
                     </a>
                 </div>
             </div>
@@ -190,7 +190,7 @@
     </div>
 
     <!-- Notifikasi Toast -->
-    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-center">
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-8 py-4 rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-center font-semibold">
         <span id="toastMsg">Berjaya</span>
     </div>
 
@@ -253,6 +253,7 @@
             const bmi = (weight / ((height/100) * (height/100))).toFixed(1);
             let status = "";
             let colorClass = "";
+            let bgStatusClass = "";
             let iconClass = "";
             let animClass = "";
             let advice = "";
@@ -260,6 +261,7 @@
             if(bmi < 18.5) { 
                 status = "KURANG BERAT (Udang Kering)"; 
                 colorClass = "text-blue-600"; 
+                bgStatusClass = "bg-blue-100 text-blue-700";
                 iconClass = "fa-solid fa-shrimp"; 
                 animClass = "fa-beat text-blue-400";
                 advice = "Anda perlu tingkatkan kalori berkhasiat! Tambah 'extra' protein dan lemak sihat seperti kacang dan avokado. Makan 5-6 kali sehari dalam hidangan kecil.";
@@ -267,6 +269,7 @@
             else if(bmi < 25) { 
                 status = "NORMAL (Mantap Boss)"; 
                 colorClass = "text-green-600"; 
+                bgStatusClass = "bg-green-100 text-green-700";
                 iconClass = "fa-solid fa-face-grin-stars"; 
                 animClass = "fa-bounce text-green-500";
                 advice = "Hebat! Kekalkan momentum ini. Pastikan pilihan lauk yang pelbagai dan kurangkan garam dalam masakan.";
@@ -274,6 +277,7 @@
             else if(bmi < 30) { 
                 status = "LEBIH BERAT (Sikit Lagi)"; 
                 colorClass = "text-yellow-600"; 
+                bgStatusClass = "bg-yellow-100 text-yellow-700";
                 iconClass = "fa-solid fa-cookie-bite"; 
                 animClass = "fa-shake text-yellow-500";
                 advice = "Fokus pada 'Separuh Pinggan' sayuran. Kurangkan minuman manis di kantin dan mulakan aktiviti berjalan 10k langkah sehari.";
@@ -281,16 +285,17 @@
             else { 
                 status = "OBESITI (Alamak!)"; 
                 colorClass = "text-red-600"; 
+                bgStatusClass = "bg-red-100 text-red-700";
                 iconClass = "fa-solid fa-face-dizzy"; 
                 animClass = "fa-spin fa-spin-reverse text-red-500";
-                advice = "Jangan putus asa! Elakkan makanan diproses dan kurangkan nasi putih secara berperingkat.";
+                advice = "Jangan putus asa! Elakkan makanan diproses dan kurangkan nasi putih secara berperingkat. Konsisten adalah kunci kejayaan.";
             }
 
             // Kemaskini Paparan Keputusan
             document.getElementById('bmiIconContainer').innerHTML = `<i class="${iconClass} ${animClass}"></i>`;
             document.getElementById('bmiValue').textContent = bmi;
             document.getElementById('bmiStatus').textContent = status;
-            document.getElementById('bmiStatus').className = `text-sm font-bold mt-1 ${colorClass}`;
+            document.getElementById('bmiStatus').className = `text-sm font-bold mt-2 px-4 py-1 rounded-full inline-block ${bgStatusClass}`;
             document.getElementById('adviceText').textContent = advice;
             document.getElementById('resultBox').classList.remove('hidden');
 
@@ -304,7 +309,7 @@
             const btn = document.getElementById('btnHantar');
             const orgText = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Menghantar...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> MENYIMPAN...`;
 
             const payload = {
                 name: currentUser.name,
